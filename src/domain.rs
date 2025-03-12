@@ -78,6 +78,12 @@ impl From<String> for TaskId {
         }
     }
 }
+impl std::fmt::Display for TaskId {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(f, "{}", self.value)?;
+        Ok(())
+    }
+}
 
 #[derive(Debug, Clone)]
 pub struct Title {
@@ -94,6 +100,12 @@ impl Title {
         Ok(Self { value: title })
     }
 }
+impl std::fmt::Display for Title {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(f, "{}", self.value)?;
+        Ok(())
+    }
+}
 
 #[derive(Debug, Clone)]
 pub struct Description {
@@ -107,6 +119,12 @@ impl Description {
         Ok(Self { value: description })
     }
 }
+impl std::fmt::Display for Description {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        write!(f, "{}", self.value)?;
+        Ok(())
+    }
+}
 
 #[derive(Debug, Clone)]
 pub enum Priority {
@@ -114,6 +132,17 @@ pub enum Priority {
     Medium,
     Low,
 }
+impl std::fmt::Display for Priority {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match self {
+            Self::High => write!(f, "High")?,
+            Self::Medium => write!(f, "Medium")?,
+            Self::Low => write!(f, "Low")?,
+        }
+        Ok(())
+    }
+}
+
 
 #[derive(Debug, Clone)]
 pub enum Category {
@@ -122,15 +151,32 @@ pub enum Category {
     Study,
     Other,
 }
+impl std::fmt::Display for Category {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match self {
+            Self::Work => write!(f, "Work")?,
+            Self::Personal => write!(f, "Personal")?,
+            Self::Study => write!(f, "Study")?,
+            Self::Other => write!(f, "Other")?,
+        }
+        Ok(())
+    }
+}
 
 #[derive(Debug, Clone)]
 pub struct DueDate {
     value: DateTime<Utc>,
 }
-
 impl DueDate {
     fn new(due_date: DateTime<Utc>) -> Self {
         Self { value: due_date }
+    }
+}
+impl std::fmt::Display for DueDate {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        let text = self.value.to_string();
+        write!(f, "{text}")?;
+        Ok(())
     }
 }
 
@@ -139,6 +185,16 @@ pub enum Status {
     Todo,
     InProgress,
     Completed,
+}
+impl std::fmt::Display for Status {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match self {
+            Self::Todo => write!(f, "Todo")?,
+            Self::InProgress => write!(f, "InProgress")?,
+            Self::Completed => write!(f, "Completed")?,
+        }
+        Ok(())
+    }
 }
 
 /// Interface
